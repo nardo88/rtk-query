@@ -1,13 +1,16 @@
+import { Provider } from 'react-redux'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+
+import { store } from '@app/redux'
 
 import { Notifications } from '@features/Notifications'
 import { Page404 } from '@pages/404'
-import { HomePage } from '@pages/Home/HomePage'
+import { MainPage } from '@pages/MainPage/MainPage'
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <HomePage />,
+    element: <MainPage />,
   },
   {
     path: '*',
@@ -17,8 +20,10 @@ const router = createBrowserRouter([
 
 export function App() {
   return (
-    <Notifications>
-      <RouterProvider router={router} />
-    </Notifications>
+    <Provider store={store}>
+      <Notifications>
+        <RouterProvider router={router} />
+      </Notifications>
+    </Provider>
   )
 }

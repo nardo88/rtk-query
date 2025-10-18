@@ -1,13 +1,13 @@
 import type { FC } from 'react'
 
-import { Home } from '@features/Home'
+import { Todo } from '@features/Todo'
 import { Layout } from '@widgets/Layout/Layout'
 
-export const HomePage: FC = () => {
+export const MainPage: FC = () => {
   return (
     <Layout>
       <div className="container">
-        <Home />
+        <Todo />
       </div>
     </Layout>
   )
