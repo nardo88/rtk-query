@@ -1,0 +1,10 @@
+.notificationList {
+  position: fixed;
+
+  top: calc(var(--navbar-height) + 30px);
+  right: 30px;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
