@@ -4,18 +4,28 @@ import { type ITodoSchema } from '../types'
 
 const initialState: ITodoSchema = {
   isLoading: false,
-  count: 0,
+  todos: [],
+  isOpen: false,
+  // editor
+  description: '',
+  title: '',
 }
 
 const slice = createSlice({
   name: 'todo',
   initialState,
   reducers: {
-    setCount(state, _action: PayloadAction<boolean>) {
-      state.count += 1
+    setIsOpen(state, action: PayloadAction<boolean>) {
+      state.isOpen = action.payload
+    },
+    setTitle(state, action: PayloadAction<string>) {
+      state.title = action.payload
+    },
+    setDescription(state, action: PayloadAction<string>) {
+      state.description = action.payload
     },
   },
-  extraReducers(builder) {
+  extraReducers(_builder) {
     // builder
     //   // Комментарий
     //   .addCase(thunk.pending, (state) => {

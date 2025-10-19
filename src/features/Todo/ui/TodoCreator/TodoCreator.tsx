@@ -1,0 +1,37 @@
+import { type FC } from 'react'
+
+import { getDescription, getIsOpen, getTitle } from '@features/Todo/selectors'
+import { actions } from '@features/Todo/slice'
+
+import { useAppDispatch, useAppSelector } from '@shared/hooks/redux'
+import Button from '@shared/ui/Button/Button'
+import { Input } from '@shared/ui/Input/Input'
+import { Popup } from '@shared/ui/Popup/Popup'
+
+import cls from './TodoCreator.module.scss'
+
+export const TodoCreator: FC = () => {
+  const dispatch = useAppDispatch()
+
+  const isOpen = useAppSelector(getIsOpen)
+  const title = useAppSelector(getTitle)
+  const description = useAppSelector(getDescription)
+  return (
+    <div className={cls.todoCreator}>
+      <Button onClick={() => dispatch(actions.setIsOpen(true))}>Add todo</Button>
+      {isOpen && (
+        <Popup onClose={() => dispatch(actions.setIsOpen(false))} title="Создание TODO">
+          <div className={cls.content}>
+            <Input label="title" value={title} onChange={(v) => dispatch(actions.setTitle(v))} />
+            <Input
+              label="description"
+              value={description}
+              onChange={(v) => dispatch(actions.setDescription(v))}
+            />
+            <Button onClick={() => {}}>save</Button>
+          </div>
+        </Popup>
+      )}
+    </div>
+  )
+}
