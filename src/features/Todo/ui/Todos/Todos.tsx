@@ -1,0 +1,55 @@
+import { type FC, useState } from 'react'
+
+import { getTodos } from '@features/Todo/selectors'
+import { remove } from '@features/Todo/thunks/remove'
+import type { ITodo } from '@features/Todo/types'
+
+import { useAppDispatch, useAppSelector } from '@shared/hooks/redux'
+import { Text } from '@shared/ui/Text/Text'
+import RemoveIcon from '@shared/ui/icons/RemoveIcon'
+
+import cls from './Todos.module.scss'
+
+const TodosItem: FC<ITodo> = (props) => {
+  const { title, description, _id } = props
+  const dispatch = useAppDispatch()
+
+  const [isOpen, setIsOpen] = useState(false)
+  return (
+    <div className={cls.todos}>
+      <div className={cls.top} onClick={() => setIsOpen((p) => !p)}>
+        <Text>{title}</Text>
+        <RemoveIcon
+          onClick={(e) => {
+            e.stopPropagation()
+            dispatch(remove(_id))
+          }}
+        />
+      </div>
+      {isOpen && (
+        <div className={cls.content}>
+          <Text variant="helper">Описание</Text>
+          <Text>{description}</Text>
+        </div>
+      )}
+    </div>
+  )
+}
+
+export const Todos: FC = () => {
+  const todos = useAppSelector(getTodos)
+
+  if (!todos.length)
+    return (
+      <Text className={cls.emptyData} variant="helper">
+        Нет данных для отображения
+      </Text>
+    )
+  return (
+    <div className={cls.list}>
+      {todos.map((item) => (
+        <TodosItem key={item._id} {...item} />
+      ))}
+    </div>
+  )
+}

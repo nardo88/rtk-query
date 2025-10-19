@@ -2,6 +2,7 @@ import { type FC } from 'react'
 
 import { getDescription, getIsOpen, getTitle } from '@features/Todo/selectors'
 import { actions } from '@features/Todo/slice'
+import { create } from '@features/Todo/thunks/create'
 
 import { useAppDispatch, useAppSelector } from '@shared/hooks/redux'
 import Button from '@shared/ui/Button/Button'
@@ -28,7 +29,7 @@ export const TodoCreator: FC = () => {
               value={description}
               onChange={(v) => dispatch(actions.setDescription(v))}
             />
-            <Button onClick={() => {}}>save</Button>
+            <Button onClick={() => dispatch(create())}>save</Button>
           </div>
         </Popup>
       )}
