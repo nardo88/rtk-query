@@ -20,6 +20,8 @@ app.get('/api/v1/todos', async (req, res) => {
   try {
     const { page = 1, pageCount = 10 } = req.query
 
+    // if (true) return res.status(400).json({ message: ['custom error'] })
+
     const list = JSON.parse(await fs.readFile(FILE_PATH, 'utf8'))
     const data = [...list]
       .sort((a, b) => b.createdAt - a.createdAt)

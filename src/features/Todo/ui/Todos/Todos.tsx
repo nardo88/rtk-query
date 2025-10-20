@@ -36,10 +36,11 @@ const TodosItem: FC<ITodo> = (props) => {
   )
 }
 
-export const Todos: FC = () => {
-  const todos = useAppSelector(getTodos)
-
-  if (!todos.length)
+interface IProps {
+  data: ITodo[]
+}
+export const Todos: FC<IProps> = ({ data }) => {
+  if (!data.length)
     return (
       <Text className={cls.emptyData} variant="helper">
         Нет данных для отображения
@@ -47,7 +48,7 @@ export const Todos: FC = () => {
     )
   return (
     <div className={cls.list}>
-      {todos.map((item) => (
+      {data.map((item) => (
         <TodosItem key={item._id} {...item} />
       ))}
     </div>

@@ -5,13 +5,14 @@ import {
   configureStore,
 } from '@reduxjs/toolkit'
 
-import { todoReducer } from '@features/Todo'
+import { todoApi, todoReducer } from '@features/Todo'
 
 import { createReducerManager } from '../services'
 import { type StateSchema } from '../types'
 
 const rootReducer: ReducersMapObject<StateSchema> = {
   todo: todoReducer,
+  [todoApi.reducerPath]: todoApi.reducer,
 }
 
 const reducerManager = createReducerManager(rootReducer)
@@ -19,7 +20,7 @@ const reducerManager = createReducerManager(rootReducer)
 const store = configureStore({
   reducer: reducerManager.reduce as Reducer<CombinedState<StateSchema>>,
   devTools: true, // Определяем mode. Он определяет будут ли работать devtools (плагин redux)
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(todoApi.middleware),
 })
 
 // @ts-ignore

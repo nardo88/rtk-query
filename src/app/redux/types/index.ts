@@ -7,7 +7,7 @@ import {
   type ReducersMapObject,
 } from '@reduxjs/toolkit'
 
-import type { ITodoSchema } from '@features/Todo'
+import type { ITodoSchema, todoApi } from '@features/Todo'
 
 import store from '../store'
 
@@ -16,11 +16,13 @@ export type RootState = ReturnType<typeof store.getState>
 // тип dispatch
 export type AppDispatch = typeof store.dispatch
 
+type RTK = ReturnType<typeof todoApi.reducer>
 // ручками описываем тип нашего состояния.
 // динамические редьюсеры указываем как необязательные
 export interface StateSchema {
   // Здесь перечисляем состояния постоянные
   todo: ITodoSchema
+  [todoApi.reducerPath]: RTK
   // Ниже динамические
 }
 

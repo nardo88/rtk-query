@@ -1,12 +1,14 @@
-import { type FC, useEffect } from 'react'
+import { type FC } from 'react'
 
+import { todoApi } from '@features/Todo'
 import { PAGE_COUNT } from '@features/Todo/consts'
-import { getCurrentPage, getTotal } from '@features/Todo/selectors'
+import { getCurrentPage } from '@features/Todo/selectors'
 import { actions } from '@features/Todo/slice'
-import { getList } from '@features/Todo/thunks/getList'
 
 import { useAppDispatch, useAppSelector } from '@shared/hooks/redux'
 import Pagination from '@shared/ui/Pagination/Pagination'
+import { Spinner } from '@shared/ui/Spinner/Spinner'
+import { Text } from '@shared/ui/Text/Text'
 
 import { TodoCreator } from '../TodoCreator/TodoCreator'
 import { Todos } from '../Todos/Todos'
@@ -15,20 +17,27 @@ import cls from './Main.module.scss'
 
 export const Main: FC = () => {
   const dispatch = useAppDispatch()
-  const total = useAppSelector(getTotal)
   const currentPage = useAppSelector(getCurrentPage)
 
-  useEffect(() => {
-    dispatch(getList())
-  }, [currentPage])
+  // useGetAllTodoQuery - автоматически сгенерированный хук. Первым аргументом он принимает параметр который должен как то использоваться в запросе. У нас такого нет, поэтому передаем пустую строку
+  const { isLoading, data, error } = todoApi.useGetAllTodoQuery(currentPage)
+  console.log('error: ', error)
+
+  // useEffect(() => {
+  //   dispatch(getList())
+  // }, [currentPage])
+
+  // 29:16
 
   return (
     <div className={cls.main}>
+      {isLoading && <Spinner />}
+      {error && <Text variant="error">{error.data.message.join('')}</Text>}
       <TodoCreator />
-      <Todos />
+      <Todos data={data?.list || []} />
       <Pagination
         pageCount={PAGE_COUNT}
-        total={total}
+        total={data?.total || 0}
         currentPage={currentPage}
         onChange={(v) => dispatch(actions.setCurrentPage(v))}
       />
