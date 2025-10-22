@@ -1,5 +1,6 @@
 import { type FC, useState } from 'react'
 
+import { todoApi } from '@features/Todo'
 import { getTodos } from '@features/Todo/selectors'
 import { remove } from '@features/Todo/thunks/remove'
 import type { ITodo } from '@features/Todo/types'
@@ -13,16 +14,22 @@ import cls from './Todos.module.scss'
 const TodosItem: FC<ITodo> = (props) => {
   const { title, description, _id } = props
   const dispatch = useAppDispatch()
+  const [remove, { isLoading, data, error }] = todoApi.useRemoveMutation()
+  console.log('error: ', error)
+  console.log('data: ', data)
 
   const [isOpen, setIsOpen] = useState(false)
   return (
     <div className={cls.todos}>
       <div className={cls.top} onClick={() => setIsOpen((p) => !p)}>
         <Text>{title}</Text>
+        {isLoading && <p>Loading</p>}
         <RemoveIcon
           onClick={(e) => {
             e.stopPropagation()
-            dispatch(remove(_id))
+            remove(_id)
+              .then(() => console.log(1))
+              .catch((e) => console.log('error', e))
           }}
         />
       </div>

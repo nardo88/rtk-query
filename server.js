@@ -78,7 +78,7 @@ app.delete('/api/v1/todos/:id', async (req, res) => {
   if (!list.find((i) => i._id === id)) return res.sendStatus(404)
   const newData = list.filter((i) => i._id !== id)
   await fs.writeFile(FILE_PATH, JSON.stringify(newData), 'utf8')
-  return res.sendStatus(200)
+  return res.json({ message: 'ok' })
 })
 
 app.listen(5000, () => {

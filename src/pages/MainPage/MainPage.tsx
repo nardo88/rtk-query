@@ -9,9 +9,6 @@ export const MainPage: FC = () => {
     <Layout>
       <div className="container">
         <Todo />
-        <Todo />
-        {/* <TodoV1 />
-        <TodoV1 /> */}
       </div>
     </Layout>
   )

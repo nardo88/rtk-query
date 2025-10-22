@@ -20,7 +20,9 @@ export const Main: FC = () => {
   const currentPage = useAppSelector(getCurrentPage)
 
   // useGetAllTodoQuery - автоматически сгенерированный хук. Первым аргументом он принимает параметр который должен как то использоваться в запросе. У нас такого нет, поэтому передаем пустую строку
-  const { isLoading, data, error, refetch } = todoApi.useGetAllTodoQuery(1)
+  const { isLoading, data, error, refetch } = todoApi.useGetAllTodoQuery(currentPage, {
+    // pollingInterval: 1000, // Запрос будет отправляться каждую секунду
+  })
   console.log('error: ', error)
 
   useEffect(() => {
@@ -34,7 +36,6 @@ export const Main: FC = () => {
       {isLoading && <Spinner />}
       {error && <Text variant="error">{error.data?.message.join('')}</Text>}
       <TodoCreator />
-      <button onClick={refetch}>click</button>
       <Todos data={data?.list || []} />
       <Pagination
         pageCount={PAGE_COUNT}
