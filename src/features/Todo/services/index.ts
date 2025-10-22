@@ -28,13 +28,6 @@ export const todoApi = createApi({
         method: 'DELETE',
       }),
       invalidatesTags: ['Todos'],
-      async onQueryStarted(_, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled
-          await new Promise((r) => setTimeout(r, 2000))
-          dispatch(todoApi.util.invalidateTags(['Todos']))
-        } catch {}
-      },
     }),
     add: build.mutation<void, { title: string; description: string }>({
       // Конфигурация запроса

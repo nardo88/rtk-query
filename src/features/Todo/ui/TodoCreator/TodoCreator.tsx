@@ -12,14 +12,18 @@ import { Popup } from '@shared/ui/Popup/Popup'
 
 import cls from './TodoCreator.module.scss'
 
-export const TodoCreator: FC = () => {
+interface IProps {
+  refetch: () => void
+}
+
+export const TodoCreator: FC<IProps> = ({ refetch }) => {
   const dispatch = useAppDispatch()
 
   const isOpen = useAppSelector(getIsOpen)
   const title = useAppSelector(getTitle)
   const description = useAppSelector(getDescription)
 
-  const [add, { isLoading, data, error }] = todoApi.useAddMutation()
+  const [add, { isLoading }] = todoApi.useAddMutation()
 
   const clickHandler = () => {
     add({ title, description }).then(() => dispatch(actions.setIsOpen(false)))

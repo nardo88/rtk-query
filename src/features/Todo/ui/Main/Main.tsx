@@ -35,7 +35,7 @@ export const Main: FC = () => {
     <div className={cls.main}>
       {isLoading && <Spinner />}
       {error && <Text variant="error">{error.data?.message.join('')}</Text>}
-      <TodoCreator />
+      <TodoCreator refetch={refetch} />
       <Todos data={data?.list || []} />
       <Pagination
         pageCount={PAGE_COUNT}
