@@ -18,13 +18,5 @@ export const todoApi = createApi({
         params: { page, pageCount: 10 },
       }),
     }),
-    remove: build.query<{ list: ITodo[]; total: number }, number>({
-      // Конфигурация запроса
-      query: (page) => ({
-        // Этот параметр будет приплюсовываться в базовому
-        url: '/todos',
-        params: { page, pageCount: 10 },
-      }),
-    }),
   }),
 })

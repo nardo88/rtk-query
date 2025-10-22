@@ -1,0 +1,32 @@
+.emptyData {
+  margin-top: 50px;
+  font-style: italic;
+}
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+}
+.top {
+  cursor: pointer;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  p {
+    user-select: none;
+  }
+}
+
+.todos {
+  border-radius: 12px;
+  border: 1px solid var(--base-300);
+}
+
+.content {
+  padding: 0 16px 16px;
+}
