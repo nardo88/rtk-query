@@ -14,9 +14,8 @@ import cls from './Todos.module.scss'
 const TodosItem: FC<ITodo> = (props) => {
   const { title, description, _id } = props
   const dispatch = useAppDispatch()
-  const [remove, { isLoading, data, error }] = todoApi.useRemoveMutation()
-  console.log('error: ', error)
-  console.log('data: ', data)
+
+  const [remove, { isLoading, data, error }] = todoApi.useRemoveMutation({})
 
   const [isOpen, setIsOpen] = useState(false)
   return (

@@ -6,7 +6,14 @@ import type { ITodo } from '../types'
 
 export const todoApi = createApi({
   reducerPath: 'todoApi', // Даем осмысленное название нашему сервису
-  baseQuery: fetchBaseQuery({ baseUrl: API_URL }), // Тут передаем конфиг для определения куда будут идти запросы
+  baseQuery: fetchBaseQuery({
+    baseUrl: API_URL,
+    prepareHeaders: (headers) => {
+      const token = localStorage.getItem('JWT')
+      if (token) headers.set('Authorization', `Bearer ${token}`)
+      return headers
+    },
+  }), // Тут передаем конфиг для определения куда будут идти запросы
   // endpoints - здесь описываем методы к API
   tagTypes: ['Todos'],
   endpoints: (build) => ({

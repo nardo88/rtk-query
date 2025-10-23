@@ -4,29 +4,49 @@ import fs from 'fs/promises'
 
 const app = express()
 
-let db = []
+let db = [
+  {
+    _id: '1761241375678',
+    title: '1',
+    description: '2',
+    createdAt: 1761241375678,
+    updatedAt: 1761241375678,
+  },
+  {
+    _id: '1761241378033',
+    title: '1',
+    description: '2',
+    createdAt: 1761241378033,
+    updatedAt: 1761241378033,
+  },
+  {
+    _id: '1761241380076',
+    title: '1',
+    description: '2',
+    createdAt: 1761241380076,
+    updatedAt: 1761241380076,
+  },
+  {
+    _id: '1761241381931',
+    title: '1',
+    description: '2',
+    createdAt: 1761241381931,
+    updatedAt: 1761241381931,
+  },
+]
 
-app.use(
-  cors({
-    origin: true, // или указать конкретный origin: 'http://localhost:3000'
-    credentials: true, // важно, если используете withCredentials: true
-    // methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    // allowedHeaders: ['Content-Type', 'Authorization', 'Cache-Control'],
-  })
-)
+app.use(cors({ origin: true, credentials: true }))
 app.use(express.json())
 
 app.get('/api/v1/todos', async (req, res) => {
   try {
     const { page = 1, pageCount = 10 } = req.query
-
     const data = [...db]
       .sort((a, b) => b.createdAt - a.createdAt)
       .splice(pageCount * (page - 1), pageCount)
 
     res.json({ list: data, total: db.length })
   } catch (e) {
-    console.log('e: ', e)
     return res.status(500).json({ message: e.message })
   }
 })
